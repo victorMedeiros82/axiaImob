@@ -17,4 +17,4 @@ class Faturamento(models.Model): # Define o modelo Faturamento, que representa o
     data = models.DateField()
 
     def __str__(self):
-        return f"{self.imovel.matricula} - {self.tipo} - R${self.valor}"
+        return self.tipo
