@@ -9,4 +9,9 @@ urlpatterns = [
     path("admin/documentos/", include("documentos.urls")),
     path("admin/custos/", include("custos.urls")),
     path("admin/relatorios/", include("relatorios.urls")),
+    path("admin/usuarios/", include("usuarios.urls")),
+    path("admin/configuracoes/", include("configuracoes.urls")),
+    path("admin/ajuda/", include("ajuda.urls")),
+    path("admin/suporte/", include("suporte.urls")),
+    path("admin/feedback/", include("feedback.urls")),
 ]
