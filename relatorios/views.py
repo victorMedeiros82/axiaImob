@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def relatorio_dashboard(request):
+    return render(request, "relatorios/dashboard.html")

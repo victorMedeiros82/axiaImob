@@ -1,0 +1,24 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}Lista de Documentos{% endblock %}
+
+{% block content %}
+<h1>Lista de Documentos</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>Imóvel</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Dados virão aqui -->
+    </tbody>
+</table>
+
+<a href="{% url 'documento_create' %}" class="btn btn-primary">Novo Documento</a>
+{% endblock %}

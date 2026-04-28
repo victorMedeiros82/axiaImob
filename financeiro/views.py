@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from .models import Faturamento
 
-# Create your views here.
+
+def faturamento_list(request):
+    faturamentos = Faturamento.objects.all()
+    return render(
+        request, "financeiro/faturamento_list.html", {"faturamentos": faturamentos}
+    )

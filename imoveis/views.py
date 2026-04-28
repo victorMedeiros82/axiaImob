@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from .models import Imovel
 
-# Create your views here.
+
+def imovel_list(request):
+    imoveis = Imovel.objects.all()
+    return render(request, "imoveis/imovel_list.html", {"imoveis": imoveis})
