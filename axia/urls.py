@@ -9,5 +9,4 @@ urlpatterns = [
     path("admin/documentos/", include("documentos.urls")),
     path("admin/custos/", include("custos.urls")),
     path("admin/relatorios/", include("relatorios.urls")),
-    # path("admin/imoveis/", include("imoveis.urls")),
 ]
