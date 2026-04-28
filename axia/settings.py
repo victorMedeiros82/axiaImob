@@ -133,7 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# JAZZMIN_SETTINGS = {
+JAZZMIN_SETTINGS = {
 #     "site_title": "Axia Invest",
 #     "site_header": "Axia Negócios Imobiliários",
 #     "site_brand": "Axia",
@@ -145,12 +145,12 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 #         {"app": "financeiro"},
 #         {"app": "leiloes"},
 #     ],
-#     "icons": {
-#         "imoveis.Imovel": "fas fa-building",
-#         "leiloes.Leilao": "fas fa-gavel",
-#         "financeiro.Faturamento": "fas fa-dollar-sign",
-#         "custos.CustoAquisicao": "fas fa-file-invoice-dollar",
-#     },
+    "icons": {
+        "imoveis.Imovel": "fas fa-building",
+        "leiloes.Leilao": "fas fa-gavel",
+        "financeiro.Faturamento": "fas fa-dollar-sign",
+        "custos.CustoAquisicao": "fas fa-file-invoice-dollar",
+    },
 #     "order_with_respect_to": [
 #         "leiloes",
 #         "imoveis",
@@ -158,4 +158,4 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 #         "financeiro",
 #         "documentos",
 #     ],
-# }
+}
