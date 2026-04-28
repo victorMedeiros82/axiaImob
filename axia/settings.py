@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -88,7 +88,7 @@ DATABASES = {
     "default": dj_database_url.config(
         default=None,
         conn_max_age=600,
-        ssl_require=not os.getenv("DEBUG", "True") == "True"
+        ssl_require=not os.getenv("DEBUG", "True") == "True",
     )
 }
 
@@ -134,28 +134,28 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 JAZZMIN_SETTINGS = {
-#     "site_title": "Axia Invest",
-#     "site_header": "Axia Negócios Imobiliários",
-#     "site_brand": "Axia",
-#     "welcome_sign": "Painel Estratégico de Investimentos",
-#     "theme": "darkly",
-#     "topmenu_links": [
-#         {"name": "Dashboard", "url": "admin:index"},
-#         {"app": "imoveis"},
-#         {"app": "financeiro"},
-#         {"app": "leiloes"},
-#     ],
+    "site_title": "Axia Invest",
+    "site_header": "Axia Negócios Imobiliários",
+    "site_brand": "Axia",
+    "welcome_sign": "Painel Estratégico de Investimentos",
+    "theme": "darkly",
+    "topmenu_links": [
+        {"name": "Dashboard", "url": "admin:index"},
+        {"app": "imoveis"},
+        {"app": "financeiro"},
+        {"app": "leiloes"},
+    ],
     "icons": {
         "imoveis.Imovel": "fas fa-building",
         "leiloes.Leilao": "fas fa-gavel",
         "financeiro.Faturamento": "fas fa-dollar-sign",
         "custos.CustoAquisicao": "fas fa-file-invoice-dollar",
     },
-#     "order_with_respect_to": [
-#         "leiloes",
-#         "imoveis",
-#         "custos",
-#         "financeiro",
-#         "documentos",
-#     ],
+    "order_with_respect_to": [
+        "leiloes",
+        "imoveis",
+        "custos",
+        "financeiro",
+        "documentos",
+    ],
 }
