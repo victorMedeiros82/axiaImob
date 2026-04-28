@@ -17,6 +17,10 @@ class CustoAquisicao(models.Model):
 
     def __str__(self):
         return self.tipo
+    
+    class Meta:
+        verbose_name = "Custo de Aquisição"
+        verbose_name_plural = "Custos de Aquisição"
 
 
 class CustoReforma(models.Model):
@@ -33,6 +37,10 @@ class CustoReforma(models.Model):
 
     def __str__(self):
         return self.descricao
+    
+    class Meta:
+        verbose_name = "Custo de Reforma"
+        verbose_name_plural = "Custos de Reforma"
 
 
 class CustoHolding(models.Model):
@@ -62,3 +70,7 @@ class CustoHolding(models.Model):
         dias = self.dias_ativos()
         custo_dia = self.valor_mensal / 30
         return custo_dia * dias
+    
+    class Meta:
+        verbose_name = "Custo de Holding"
+        verbose_name_plural = "Custos de Holding"
