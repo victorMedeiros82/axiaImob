@@ -150,6 +150,12 @@ JAZZMIN_SETTINGS = {
         "leiloes.Leilao": "fas fa-gavel",
         "financeiro.Faturamento": "fas fa-dollar-sign",
         "custos.CustoAquisicao": "fas fa-file-invoice-dollar",
+        "documentos.Documento": "fas fa-file-alt",
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "core.Corretor": "fas fa-user-tie",
+        "core.Cliente": "fas fa-user-friends",
+        "relatorios.Relatorio": "fas fa-chart-line",
     },
     "order_with_respect_to": [
         "leiloes",
