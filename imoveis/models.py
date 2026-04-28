@@ -51,8 +51,8 @@ class Imovel(models.Model):
         help_text="Estado de conservação do imóvel",
     )
     SITUACAO_JURIDICA_CHOICES = [
-        ("Alineação", "Alienação"),
-        ("Penhora", "Penhora"),
+        ("alineação", "Alienação"),
+        ("penhora", "Penhora"),
         ("inventário", "Inventário"),
         ("usucapião", "Usucapião"),
         ("hipoteca", "Hipoteca"),
