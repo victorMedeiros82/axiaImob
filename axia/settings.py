@@ -85,7 +85,7 @@ WSGI_APPLICATION = "axia.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgresql://postgres:123456@localhost:5432/axia_db",
+        default=None,
         conn_max_age=600,
         ssl_require=not os.getenv("DEBUG", "True") == "True"
     )
