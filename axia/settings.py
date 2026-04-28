@@ -164,4 +164,5 @@ JAZZMIN_SETTINGS = {
         "financeiro",
         "documentos",
     ],
+    "Sidebar": {"user_avatar": None},
 }
