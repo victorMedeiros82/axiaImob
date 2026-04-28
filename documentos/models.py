@@ -6,11 +6,11 @@ class Documento(models.Model):
     imovel = models.ForeignKey(Imovel, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=100)
     STATUS = [
-        ("Pendente", "Pendente"),
-        ("Recebido", "Recebido"),
-        ("Vencido", "Vencido"),
-        ("Registrado", "Registrado"),
-        ("Protocolado", "Protocolado"),
+        ("pendente", "Pendente"),
+        ("recebido", "Recebido"),
+        ("vencido", "Vencido"),
+        ("registrado", "Registrado"),
+        ("protocolado", "Protocolado"),
     ]
     status = models.CharField(max_length=50, choices=STATUS, default="Pendente")
     data_recebimento = models.DateField(null=True, blank=True)

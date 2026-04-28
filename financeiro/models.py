@@ -12,7 +12,7 @@ class Faturamento(models.Model): # Define o modelo Faturamento, que representa o
         ("venda", "Venda"),
         ("locação", "Locação"),
     ]
-    tipo = models.CharField(max_length=20, choices=TIPO)
+    tipo = models.CharField(max_length=20, choices=TIPO, default="venda")
     valor = models.DecimalField(max_digits=12, decimal_places=2)
     data = models.DateField()
 
