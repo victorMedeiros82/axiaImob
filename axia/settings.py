@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,7 +15,7 @@ SECRET_KEY = "django-insecure-(#nr0(6kvpoa$z10izxi09@-+d!7k71$&-k8*vo^#=sbwo6fb*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".onrender.com"]
 
 
 # Application definition
@@ -71,17 +72,24 @@ WSGI_APPLICATION = "axia.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "axia_db",
-        "USER": "postgres",
-        "PASSWORD": "123456",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "axia_db",
+#         "USER": "postgres",
+#         "PASSWORD": "123456",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
 
+DATABASES = {
+    "default": dj_database_url.config(
+        default="postgresql://postgres:123456@localhost:5432/axia_db",
+        conn_max_age=600,
+        ssl_require=not os.getenv("DEBUG", "True") == "True"
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -121,6 +129,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # JAZZMIN_SETTINGS = {
 #     "site_title": "Axia Invest",
