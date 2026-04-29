@@ -1,22 +1,25 @@
-# admin.py
 from django.contrib import admin
 from .models import Imovel
 from custos.models import CustoAquisicao, CustoReforma
 from django.utils.html import format_html
+from axia.admin_base import BaseAdmin
 
 
+# 🔹 INLINES MAIS ORGANIZADOS
 class CustoAquisicaoAdmin(admin.TabularInline):
     model = CustoAquisicao
-    extra = 1
+    extra = 0
+    classes = ["collapse"]  # deixa recolhido (UX melhor)
 
 
 class CustoReformaAdmin(admin.TabularInline):
     model = CustoReforma
-    extra = 1
+    extra = 0
+    classes = ["collapse"]
 
 
 @admin.register(Imovel)
-class ImovelAdmin(admin.ModelAdmin):
+class ImovelAdmin(BaseAdmin):
     list_display = (
         "leilao",
         "matricula",
@@ -27,6 +30,7 @@ class ImovelAdmin(admin.ModelAdmin):
         "holding_display",
         "alerta_display",
     )
+
     list_filter = (
         "tipo",
         "estado_conservacao",
@@ -34,80 +38,105 @@ class ImovelAdmin(admin.ModelAdmin):
         "cidade",
         "estado",
     )
+
     search_fields = ("leilao__processo", "matricula", "cidade", "estado")
 
-    # Organiza os campos no formulário para ficar bonitão
+    ordering = ("-id",)
+    list_per_page = 20
+
+    # 🔥 MELHORIA IMPORTANTE (evita select gigante)
+    autocomplete_fields = ["leilao"]
+
+    # 🔹 INLINES
     inlines = [CustoAquisicaoAdmin, CustoReformaAdmin]
+
+    # 🔥 ORGANIZAÇÃO PROFISSIONAL DOS CAMPOS
     fieldsets = (
         (
-            "Detalhes do Imóvel",
+            "📄 Dados principais",
             {
                 "fields": (
-                    "leilao",
-                    "matricula",
-                    "tipo",
-                    "area",
-                    "estado_conservacao",
-                    "situacao_juridica",
-                    "image_imovel",
+                    ("leilao", "tipo"),
+                    ("matricula", "area"),
+                    ("estado_conservacao", "situacao_juridica"),
+                    ("image_imovel",),
                 )
             },
         ),
         (
-            "Endereço",
+            "📍 Endereço",
             {
                 "fields": (
-                    "cep",
-                    "logradouro",
-                    "numero",
-                    "complemento",
-                    "bairro",
-                    "cidade",
-                    "estado",
+                    ("cep", "logradouro"),
+                    ("numero", "complemento"),
+                    ("bairro",),
+                    ("cidade", "estado"),
                 )
             },
         ),
         (
-            "Geolocalização",
-            {"fields": ("latitude", "longitude")},
+            "🗺️ Geolocalização",
+            {
+                "classes": ("collapse",),  # deixa opcional
+                "fields": ("latitude", "longitude"),
+            },
         ),
     )
 
-    # Aqui é o segredo: injeta o JS no Admin
+    # 🔥 CAMPOS SOMENTE LEITURA (evita bugs)
+    readonly_fields = ("image_thumbnail",)
+
+    # 🔥 PERFORMANCE (importante quando crescer)
+    list_select_related = ("leilao",)
+
+    # ------------------------------
+    # 🎯 VISUAIS
+    # ------------------------------
+
     def holding_display(self, obj):
         custo = obj.custo_holding_total()
 
         if custo > 10000:
-            cor = "red"
+            cor = "#e74c3c"  # vermelho mais bonito
         elif custo > 5000:
-            cor = "orange"
+            cor = "#f39c12"  # laranja
         else:
-            cor = "green"
+            cor = "#27ae60"  # verde
 
-        return format_html(f'<strong style="color:{cor}">R$ {custo:,.2f}</strong>')
+        return format_html('<strong style="color:{}">R$ {:,.2f}</strong>', cor, custo)
 
     holding_display.short_description = "Holding"
 
     def alerta_display(self, obj):
         status = obj.alerta_holding()
 
-        cores = {"CRÍTICO": "red", "ALTO": "orange", "MODERADO": "gold", "OK": "green"}
+        cores = {
+            "CRÍTICO": "#e74c3c",
+            "ALTO": "#f39c12",
+            "MODERADO": "#f1c40f",
+            "OK": "#27ae60",
+        }
 
-        return format_html(f'<strong style="color:{cores[status]}">{status}</strong>')
+        return format_html(
+            '<strong style="color:{}">{}</strong>',
+            cores.get(status, "#333"),
+            status,
+        )
 
     alerta_display.short_description = "Alerta"
 
     def image_thumbnail(self, obj):
-        """Exibe thumbnail da imagem do imóvel"""
         if obj.image_imovel:
             return format_html(
-                f'<img src="{obj.image_imovel.url}" width="50" height="50" style="border-radius: 5px;" />'
+                '<img src="{}" width="50" height="50" style="border-radius:6px; object-fit:cover;" />',
+                obj.image_imovel.url,
             )
         return "-"
 
     image_thumbnail.short_description = "Imagem"
 
+    # ------------------------------
+    # ⚙️ MEDIA (mantém seu JS + BaseAdmin)
+    # ------------------------------
     class Media:
-        js = (
-            "admin/js/buscar_cep.js",
-        )  # O caminho para o seu JS, coloque na pasta static/js/
+        js = ("admin/js/buscar_cep.js",)

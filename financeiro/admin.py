@@ -1,30 +1,67 @@
-from django.contrib import (
-    admin,
-)  # Importa o módulo admin do Django para registrar modelos no painel de administração
-from .models import (
-    Faturamento,
-)  # Importa o modelo Faturamento para registrá-lo no painel de administração
+from django.contrib import admin
+from .models import Faturamento
+from axia.admin_base import BaseAdmin
+from django.utils.html import format_html
 
 
-@admin.register(
-    Faturamento
-)  # Registra o modelo Faturamento no painel de administração usando o decorador @admin.register
-class FaturamentoAdmin(
-    admin.ModelAdmin
-):  # Define a classe FaturamentoAdmin para personalizar a exibição do modelo Faturamento no painel de administração
+@admin.register(Faturamento)
+class FaturamentoAdmin(BaseAdmin):
     list_display = (
         "imovel",
         "tipo",
-        "valor",
+        "valor_formatado",
         "data",
-    )  # Define os campos a serem exibidos na lista de registros de faturamento no painel de administração
+        "status_financeiro",
+    )
+
     list_filter = (
         "tipo",
         "data",
-    )  # Adiciona filtros para os campos "tipo" e "data" no painel de administração, permitindo filtrar os registros de faturamento por tipo e data
-    search_fields = (
-        "imovel__matricula",
-    )  # Adiciona um campo de pesquisa para o campo "matricula" do modelo Imovel, permitindo pesquisar registros de faturamento com base na matrícula do imóvel relacionado
+    )
 
+    search_fields = ("imovel__matricula",)
 
-# admin.site.register(Faturamento)
+    ordering = ("-data",)
+    list_per_page = 20
+
+    autocomplete_fields = ["imovel"]
+
+    # 🔥 PERFORMANCE
+    list_select_related = ("imovel",)
+
+    # 🔥 ORGANIZAÇÃO DO FORM
+    fieldsets = (
+        (
+            "💰 Dados financeiros",
+            {
+                "fields": (
+                    ("imovel", "tipo"),
+                    ("valor",),
+                    ("data",),
+                )
+            },
+        ),
+    )
+
+    # ------------------------------
+    # 🎯 VISUAIS
+    # ------------------------------
+
+    def valor_formatado(self, obj):
+        return format_html(
+            '<strong style="color:#2ecc71">R$ {:,.2f}</strong>',
+            obj.valor,
+        )
+
+    valor_formatado.short_description = "Valor"
+
+    def status_financeiro(self, obj):
+        # exemplo simples (você pode evoluir isso depois)
+        if obj.valor > 10000:
+            return format_html('<strong style="color:#27ae60">ALTO</strong>')
+        elif obj.valor > 5000:
+            return format_html('<strong style="color:#f39c12">MÉDIO</strong>')
+        else:
+            return format_html('<strong style="color:#e74c3c">BAIXO</strong>')
+
+    status_financeiro.short_description = "Status"

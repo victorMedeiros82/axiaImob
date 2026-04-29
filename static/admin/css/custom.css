@@ -1,0 +1,55 @@
+/* 🔥 LAYOUT GERAL */
+.content-wrapper {
+    max-width: 1200px;
+}
+
+/* 🔥 FORM MAIS COMPACTO */
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* 🔥 CAMPOS MENORES E BONITOS */
+.form-control,
+select,
+input {
+    max-width: 300px;
+    height: 38px;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+/* 🔥 CAMPOS ESPECÍFICOS */
+input[type="number"] {
+    max-width: 140px;
+}
+
+input[type="text"] {
+    max-width: 200px;
+}
+
+/* 🔥 LABELS MAIS ORGANIZADOS */
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* 🔥 ESPAÇAMENTO ENTRE CAMPOS */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* 🔥 BOTÕES */
+.submit-row input {
+    border-radius: 6px;
+    padding: 8px 16px;
+}
+
+/* 🔥 CARD STYLE (deixa com cara de sistema moderno) */
+.module {
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 20px;
+    background: #fff;
+}
