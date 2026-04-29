@@ -17,6 +17,25 @@ class CustoReformaAdmin(admin.TabularInline):
 
 @admin.register(Imovel)
 class ImovelAdmin(admin.ModelAdmin):
+    list_display = (
+        "leilao",
+        "matricula",
+        "tipo",
+        "cidade",
+        "estado",
+        "image_imovel",
+        "holding_display",
+        "alerta_display",
+    )
+    list_filter = (
+        "tipo",
+        "estado_conservacao",
+        "situacao_juridica",
+        "cidade",
+        "estado",
+    )
+    search_fields = ("leilao__processo", "matricula", "cidade", "estado")
+
     # Organiza os campos no formulário para ficar bonitão
     inlines = [CustoAquisicaoAdmin, CustoReformaAdmin]
     fieldsets = (
