@@ -23,7 +23,7 @@ class ImovelAdmin(admin.ModelAdmin):
         "tipo",
         "cidade",
         "estado",
-        "image_imovel",
+        "image_thumbnail",
         "holding_display",
         "alerta_display",
     )
@@ -96,6 +96,16 @@ class ImovelAdmin(admin.ModelAdmin):
         return format_html(f'<strong style="color:{cores[status]}">{status}</strong>')
 
     alerta_display.short_description = "Alerta"
+
+    def image_thumbnail(self, obj):
+        """Exibe thumbnail da imagem do imóvel"""
+        if obj.image_imovel:
+            return format_html(
+                f'<img src="{obj.image_imovel.url}" width="50" height="50" style="border-radius: 5px;" />'
+            )
+        return "-"
+
+    image_thumbnail.short_description = "Imagem"
 
     class Media:
         js = (
