@@ -4,10 +4,23 @@ body {
 }
 
 .hero {
-    background: #0f172a;
-    color: white;
-    text-align: center;
-    padding: 100px 20px;
+    min-height: 80vh;
+    background: url('/static/img/hero.jpg') center/cover no-repeat;
+    position: relative;
+}
+
+/* overlay escuro (deixa texto legível) */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+/* garante que o texto fique acima do overlay */
+.hero .container {
+    position: relative;
+    z-index: 1;
 }
 
 .btn {
