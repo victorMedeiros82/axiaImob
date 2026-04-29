@@ -2,6 +2,7 @@ from django.db import models
 from leiloes.models import Leilao
 from datetime import date
 from django.db.models import signals
+from django.utils.text import slugify
 from django.dispatch import receiver
 
 
@@ -53,10 +54,10 @@ class Imovel(models.Model):
         help_text="Estado de conservação do imóvel",
     )
     SITUACAO_JURIDICA_CHOICES = [
-        ("alineação", "Alienação"),
+        ("alienacao", "Alienação"),
         ("penhora", "Penhora"),
         ("inventário", "Inventário"),
-        ("usucapião", "Usucapião"),
+        ("usucapiao", "Usucapião"),
         ("hipoteca", "Hipoteca"),
         ("outros", "Outros"),
     ]
@@ -114,9 +115,7 @@ class Imovel(models.Model):
 @receiver(signals.pre_save, sender=Imovel)
 def gerar_slug_imovel(sender, instance, **kwargs):
     """Gera o slug automaticamente antes de salvar o imóvel"""
-    if not instance.slug:
-        instance.slug = (
-            f"{instance.matricula}-{instance.id}"
-            if instance.id
-            else instance.matricula.lower().replace(" ", "-")
-        )
+    if not instance.slug and instance.matricula:
+        # Gera um slug a partir da matrícula. Se o ID já existir, adiciona-o para garantir unicidade.
+        base_slug = slugify(instance.matricula)
+        instance.slug = f"{base_slug}-{instance.id}" if instance.id else base_slug
