@@ -1,0 +1,34 @@
+body {
+    font-family: Arial;
+    margin: 0;
+}
+
+.hero {
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.btn {
+    background: #22c55e;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.busca, .imoveis, .leiloes, .sobre, .cta {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
