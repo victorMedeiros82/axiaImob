@@ -21,7 +21,9 @@ class LeilaoAdmin(BaseAdmin):
     ordering = ("-data_leilao",)
     list_per_page = 20
 
-    autocomplete_fields = ["comarca"]
+    autocomplete_fields = (
+        []
+    )  # Removido 'comarca' pois não é um ForeignKey/ManyToManyField
 
     # 🔥 ORGANIZAÇÃO DO FORM
     fieldsets = (
