@@ -97,10 +97,15 @@
           {% for imovel in imoveis %}
           <div class="col-md-4">
             <div class="card">
-              <img src="{{ imovel.imagem.url }}" class="card-img-top" />
+              {% if imovel.image_imovel %}
+              <img src="{{ imovel.image_imovel.url }}" class="card-img-top" />
+              {% else %}
+              <img src="https://via.placeholder.com/300x200?text=Imóvel" class="card-img-top" />
+              {% endif %}
               <div class="card-body">
-                <h5>{{ imovel.nome }}</h5>
-                <p>R$ {{ imovel.valor }}</p>
+                <h5>{{ imovel.matricula }}</h5>
+                <p>{{ imovel.cidade }} - {{ imovel.get_tipo_display }}</p>
+                <p>Área: {{ imovel.area }}m²</p>
               </div>
             </div>
           </div>

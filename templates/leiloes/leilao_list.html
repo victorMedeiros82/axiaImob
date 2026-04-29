@@ -1,0 +1,32 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}Lista de Leilões{% endblock %}
+
+{% block content %}
+<h1>Lista de Leilões</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Processo</th>
+            <th>Data</th>
+            <th>Valor Mínimo</th>
+            <th>Tipo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for leilao in leiloes %}
+        <tr>
+            <td>{{ leilao.processo }}</td>
+            <td>{{ leilao.data_leilao }}</td>
+            <td>R$ {{ leilao.valor_minimo }}</td>
+            <td>{{ leilao.get_tipo_display }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center">Nenhum leilão cadastrado</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

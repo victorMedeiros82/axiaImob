@@ -1,0 +1,34 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}Lista de Imóveis{% endblock %}
+
+{% block content %}
+<h1>Lista de Imóveis</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Matrícula</th>
+            <th>Tipo</th>
+            <th>Cidade</th>
+            <th>Área (m²)</th>
+            <th>Leilão</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for imovel in imoveis %}
+        <tr>
+            <td>{{ imovel.matricula }}</td>
+            <td>{{ imovel.get_tipo_display }}</td>
+            <td>{{ imovel.cidade }}</td>
+            <td>{{ imovel.area }}</td>
+            <td>{{ imovel.leilao.processo }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">Nenhum imóvel cadastrado</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
