@@ -1,6 +1,8 @@
 from django.db import models
 from leiloes.models import Leilao
 from datetime import date
+from django.db.models import signals
+from django.dispatch import receiver
 
 
 class Imovel(models.Model):
@@ -64,6 +66,12 @@ class Imovel(models.Model):
         choices=SITUACAO_JURIDICA_CHOICES,
         help_text="Situação jurídica do imóvel",
     )
+    image_imovel = models.ImageField(
+        "Imagem do Imóvel", upload_to="imoveis/", blank=True, null=True
+    )
+    slug = models.SlugField(
+        "Slug", max_length=100, blank=True, null=True, editable=False
+    )
 
     def __str__(self):
         return self.matricula
@@ -101,3 +109,14 @@ class Imovel(models.Model):
     class Meta:
         verbose_name = "Imóvel"
         verbose_name_plural = "Imóveis"
+
+
+@receiver(signals.pre_save, sender=Imovel)
+def gerar_slug_imovel(sender, instance, **kwargs):
+    """Gera o slug automaticamente antes de salvar o imóvel"""
+    if not instance.slug:
+        instance.slug = (
+            f"{instance.matricula}-{instance.id}"
+            if instance.id
+            else instance.matricula.lower().replace(" ", "-")
+        )

@@ -30,6 +30,7 @@ class ImovelAdmin(admin.ModelAdmin):
                     "area",
                     "estado_conservacao",
                     "situacao_juridica",
+                    "image_imovel",
                 )
             },
         ),
@@ -77,8 +78,7 @@ class ImovelAdmin(admin.ModelAdmin):
 
     alerta_display.short_description = "Alerta"
 
-
-class Media:
-    js = (
-        "admin/js/buscar_cep.js",
-    )  # O caminho para o seu JS, coloque na pasta static/js/
+    class Media:
+        js = (
+            "admin/js/buscar_cep.js",
+        )  # O caminho para o seu JS, coloque na pasta static/js/
