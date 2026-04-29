@@ -15,7 +15,14 @@ SECRET_KEY = "django-insecure-(#nr0(6kvpoa$z10izxi09@-+d!7k71$&-k8*vo^#=sbwo6fb*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = [".onrender.com"]
+# Em desenvolvimento, permite localhost. Em produção, usa Render
+ALLOWED_HOSTS = [
+    ".onrender.com",
+    "127.0.0.1",
+    "localhost",
+]
+if DEBUG:
+    ALLOWED_HOSTS.append("*")
 
 
 # Application definition
@@ -73,24 +80,23 @@ WSGI_APPLICATION = "axia.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "axia_db",
-#         "USER": "postgres",
-#         "PASSWORD": "123456",
-#         "HOST": "localhost",
-#         "PORT": "5432",
-#     }
-# }
-
-DATABASES = {
-    "default": dj_database_url.config(
-        default=None,
-        conn_max_age=600,
-        ssl_require=not os.getenv("DEBUG", "True") == "True",
-    )
-}
+# Em produção, use a variável DATABASE_URL
+# Em desenvolvimento, use SQLite como fallback
+if os.getenv("DATABASE_URL"):
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=not os.getenv("DEBUG", "True") == "True",
+        )
+    }
+else:
+    # Desenvolvimento local com SQLite
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

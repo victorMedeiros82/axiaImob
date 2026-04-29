@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: axia-projeto
+    runtime: python
+    startCommand: gunicorn axia.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.14"
+    buildCommand: >
+      pip install -r requirements.txt &&
+      python manage.py migrate &&
+      python manage.py collectstatic --no-input
+    plan: starter
