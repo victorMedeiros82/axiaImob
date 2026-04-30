@@ -103,7 +103,8 @@ class ImovelAdmin(BaseAdmin):
         else:
             cor = "#27ae60"  # verde
 
-        return format_html('<strong style="color:{}">R$ {:,.2f}</strong>', cor, custo)
+        custo_formatado = f"{custo:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+        return format_html('<strong style="color:{}">R$ {}</strong>', cor, custo_formatado)
 
     holding_display.short_description = "Holding"
 

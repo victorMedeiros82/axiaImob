@@ -15,16 +15,14 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = True
 
-# Em desenvolvimento, permite localhost. Em produção, usa Render
+# Apenas locais
 ALLOWED_HOSTS = [
-    ".onrender.com",
     "127.0.0.1",
     "localhost",
+    "*"
 ]
-if DEBUG:
-    ALLOWED_HOSTS.append("*")
 
 
 # Application definition
@@ -82,23 +80,13 @@ WSGI_APPLICATION = "axia.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# Em produção, use a variável DATABASE_URL
-# Em desenvolvimento, use SQLite como fallback
-if os.getenv("DATABASE_URL"):
-    DATABASES = {
-        "default": dj_database_url.config(
-            conn_max_age=600,
-            ssl_require=not os.getenv("DEBUG", "True") == "True",
-        )
+# Desenvolvimento local com SQLite
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-else:
-    # Desenvolvimento local com SQLite
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -139,7 +127,7 @@ STATIC_URL = "static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

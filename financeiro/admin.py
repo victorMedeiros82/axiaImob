@@ -48,9 +48,10 @@ class FaturamentoAdmin(BaseAdmin):
     # ------------------------------
 
     def valor_formatado(self, obj):
+        valor_formatado = f"{obj.valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         return format_html(
-            '<strong style="color:#2ecc71">R$ {:,.2f}</strong>',
-            obj.valor,
+            '<strong style="color:#2ecc71">R$ {}</strong>',
+            valor_formatado,
         )
 
     valor_formatado.short_description = "Valor"

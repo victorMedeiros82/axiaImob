@@ -30,9 +30,10 @@ class CustoAquisicaoAdmin(BaseAdmin):
     )
 
     def valor_formatado(self, obj):
+        valor_formatado = f"{obj.valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         return format_html(
-            '<strong style="color:#e74c3c">R$ {:,.2f}</strong>',
-            obj.valor,
+            '<strong style="color:#e74c3c">R$ {}</strong>',
+            valor_formatado,
         )
 
     valor_formatado.short_description = "Valor"
@@ -73,15 +74,17 @@ class CustoReformaAdmin(BaseAdmin):
     )
 
     def valor_previsto_formatado(self, obj):
+        valor_previsto_formatado = f"{(obj.valor_previsto or 0):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         return format_html(
-            '<span style="color:#f39c12">R$ {:,.2f}</span>',
-            obj.valor_previsto or 0,
+            '<span style="color:#f39c12">R$ {}</span>',
+            valor_previsto_formatado,
         )
 
     def valor_real_formatado(self, obj):
+        valor_real_formatado = f"{(obj.valor_real or 0):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         return format_html(
-            '<strong style="color:#e74c3c">R$ {:,.2f}</strong>',
-            obj.valor_real or 0,
+            '<strong style="color:#e74c3c">R$ {}</strong>',
+            valor_real_formatado,
         )
 
     def status_custo(self, obj):
@@ -129,9 +132,10 @@ class CustoHoldingAdmin(BaseAdmin):
     )
 
     def valor_mensal_formatado(self, obj):
+        valor_mensal_formatado = f"{obj.valor_mensal:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         return format_html(
-            '<strong style="color:#e67e22">R$ {:,.2f}</strong>',
-            obj.valor_mensal,
+            '<strong style="color:#e67e22">R$ {}</strong>',
+            valor_mensal_formatado,
         )
 
     def custo_total_estimado(self, obj):
@@ -147,9 +151,10 @@ class CustoHoldingAdmin(BaseAdmin):
 
         total = meses * obj.valor_mensal
 
+        total_formatado = f"{total:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
         return format_html(
-            '<strong style="color:#c0392b">R$ {:,.2f}</strong>',
-            total,
+            '<strong style="color:#c0392b">R$ {}</strong>',
+            total_formatado,
         )
 
     custo_total_estimado.short_description = "Total"
