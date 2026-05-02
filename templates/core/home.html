@@ -98,9 +98,10 @@
           <div class="col-md-4">
             <div class="card">
               {% if imovel.image_imovel %}
-              <img src="{{ imovel.image_imovel.url }}" class="card-img-top" />
+              <a href="{% url 'imoveis:imovel_detail' imovel.pk %}"><!-- Link para a página de detalhes do imóvel -->
+                <img src="{{ imovel.image_imovel.url }}" class="card-img-top" alt="Imagem do imóvel" /></a>
               {% else %}
-              <img src="https://via.placeholder.com/300x200?text=Imóvel" class="card-img-top" />
+              <img src="https://via.placeholder.com/300x200?text=Imóvel" class="card-img-top" alt="Imagem do imóvel" />
               {% endif %}
               <div class="card-body">
                 <h5>{{ imovel.matricula }}</h5>

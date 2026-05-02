@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Cadastro Axia Imobiliária</h2>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <!-- Campos Comuns -->
+                        <div class="mb-3">
+                            <label class="form-label">Nome de Usuário</label>
+                            <input type="text" name="username" class="form-control" required>
+                        </div>
+
+                        <!-- O seletor de perfil (O gatilho) -->
+                        <div class="mb-4 p-3 bg-light border rounded">
+                            <label class="form-label fw-bold">Eu sou:</label>
+                            <select name="tipo" id="id_tipo" class="form-select border-primary" required>
+                                <option value="" selected disabled>Selecione seu perfil...</option>
+                                <option value="PROPRIETARIO">Proprietário (Quero gerenciar meus imóveis)</option>
+                                <option value="INQUILINO">Inquilino (Quero ver meus contratos/boletos)</option>
+                            </select>
+                        </div>
+
+                        <!-- Campos Específicos de PROPRIETÁRIO -->
+                        <div id="campos-proprietario" style="display: none;">
+                            <h5 class="text-primary">Dados do Proprietário</h5>
+                            <div class="mb-3">
+                                <label class="form-label">CNPJ ou CPF (Para contrato)</label>
+                                <input type="text" name="documento_dono" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Chave PIX para Recebimento</label>
+                                <input type="text" name="pix_recebimento" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Campos Específicos de INQUILINO -->
+                        <div id="campos-inquilino" style="display: none;">
+                            <h5 class="text-success">Dados do Inquilino</h5>
+                            <div class="mb-3">
+                                <label class="form-label">CPF</label>
+                                <input type="text" name="cpf_inquilino" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Profissão</label>
+                                <input type="text" name="profissao" class="form-control">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 mt-4">Concluir Cadastro</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript para a lógica de esconder/mostrar -->
+<script>
+    const selectTipo = document.getElementById('id_tipo');
+    const divProprietario = document.getElementById('campos-proprietario');
+    const divInquilino = document.getElementById('campos-inquilino');
+
+    selectTipo.addEventListener('change', function() {
+        if (this.value === 'PROPRIETARIO') {
+            divProprietario.style.display = 'block';
+            divInquilino.style.display = 'none';
+        } else if (this.value === 'INQUILINO') {
+            divProprietario.style.display = 'none';
+            divInquilino.style.display = 'block';
+        }
+    });
+</script>
+{% endblock %}

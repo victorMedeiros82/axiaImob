@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "financeiro",
     "documentos",
     "relatorios",
+    "usuarios",
 ]
 
 MIDDLEWARE = [
@@ -106,7 +107,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "users.User"
+# AUTH_USER_MODEL = "users.User"
+
+# No seu settings.py
+AUTH_USER_MODEL = 'usuarios.Usuario' # NomeDoApp.NomeDaClasse
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
